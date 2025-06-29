@@ -1,0 +1,31 @@
+#USE A MAVEN IMAGE WITH JAVA 23 TO BUILD THE SPRING BOOT APP
+FROM eclipse-temurin:23-jdk as build
+
+#SET THE WORKING DIRECTORY
+WORKDIR /app
+
+#COPY THE POM.XML AND INSTALL DEPENDENCIES
+COPY pom.xml ./
+RUN ./mvnw dependency:go-offline
+
+#COPY THE SOURCE CODE AND BUILD THE APPLICATION
+COPY src ./src
+RUN ./mvnw clean package -DskipTests
+
+#USE A JAVA 23 RUNTIME IMAGE TO RUN THE APPLICATION
+FROM eclipse-temurin:23-jre
+
+#SET THE WORKING DIRECTORY
+WORKDIR /app
+
+#COPY THE BUILT JAR FILE FROM THE BUILD STAGE
+COPY --from=build /app/target/*.jar app.jar
+
+
+#EXPOSE PORT 8080
+EXPOSE 8080
+
+#SPECIFY THE COMMAND TO RUN THE APPLICATION
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+
+RUN echo "Docker build running..."

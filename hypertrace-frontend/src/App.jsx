@@ -1,21 +1,14 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import { BrowserRouter,Routes, Route } from 'react-router-dom'
-import LandingPage from './components/LandingPage/LandingPage'
-import AboutPage from './components/AboutPage/AboutPage'
-
+import { BrowserRouter} from 'react-router-dom'
+import { getAppRouter } from './utils/Helper'
 function App() {
   const [count, setCount] = useState(0)
-
+  const CurrentApp = getAppRouter();
   return (
 		<>
 			<BrowserRouter>
-        <Routes>
-          <Route path='/' element={<LandingPage />}></Route>
-          <Route path='/about' element={<AboutPage />}></Route>
-        </Routes>
+        <CurrentApp />
       </BrowserRouter>
 		</>
 	);
