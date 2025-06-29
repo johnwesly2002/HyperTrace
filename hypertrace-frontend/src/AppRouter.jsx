@@ -12,13 +12,15 @@ import ShortenUrlPage from './components/ShortenUrlPage/ShortenUrlPage'
 import PrivateRoute from './PrivateRoute/PrivateRoute'
 import ErrorPage from './components/ErrorPage/ErrorPage'
 const AppRouter = () => {
+  const hideHeaderFooter = location.pathname.startsWith("/s");
   return (
     <>
-        <NavBar />
+        {!hideHeaderFooter && <NavBar />}
         <Toaster position='top-center' />
         <Routes>
           <Route path='/' element={<LandingPage />}></Route>
           <Route path='/about' element={<AboutPage />}></Route>
+          <Route path='/s/:url' element={<ShortenUrlPage />}></Route>
           <Route path='/register' element={<PrivateRoute publicPage={true}><RegisterPage /></PrivateRoute>}></Route>
           <Route path='/login' element={<PrivateRoute publicPage={true}><LoginPage /></PrivateRoute>}></Route>
           <Route path='/dashboard' element={<PrivateRoute publicPage={false}><DashboardLayout /> </PrivateRoute>}></Route>
@@ -26,7 +28,7 @@ const AppRouter = () => {
           <Route path='*' element={<ErrorPage message={"We can't seem to find the page you're looking for"} />}></Route>
 
         </Routes>
-        <Footer />
+        {!hideHeaderFooter && <Footer />}
     </>
   )
 }

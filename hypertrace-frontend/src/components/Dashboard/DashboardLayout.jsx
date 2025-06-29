@@ -5,6 +5,7 @@ import { useFetchMyShortUrls, useFetchTotalClicks } from "../../hooks/useQuery";
 import Loader from "../Loader/Loader";
 import Shortenpopup from "./Shortenpopup";
 import ShortenUrlList from "./ShortenUrlList";
+import { FaLink } from "react-icons/fa";
 
 const DashboardLayout = () => {
 	const { token } = useStoreContext();

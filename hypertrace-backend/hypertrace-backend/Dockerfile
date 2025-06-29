@@ -4,6 +4,13 @@ FROM eclipse-temurin:23-jdk as build
 #SET THE WORKING DIRECTORY
 WORKDIR /app
 
+#COPY THE MAVEN WRAPPER AND POM.XML
+COPY mvnw ./
+COPY .mvn/ .mvn/
+
+#ENSURE THE MAVEN WRAPPER IS EXECUTABLE
+RUN chmod +x mvnw
+
 #COPY THE POM.XML AND INSTALL DEPENDENCIES
 COPY pom.xml ./
 RUN ./mvnw dependency:go-offline
